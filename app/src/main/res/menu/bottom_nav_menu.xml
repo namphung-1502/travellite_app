@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_home"
+    android:icon="@drawable/home_menu"
+    android:title="Khám phá"/>
+    <item android:id="@+id/menu_favorite"
+        android:icon="@drawable/favorite_menu"
+        android:title="Yêu thích"/>
+    <item android:id="@+id/menu_yourtrip"
+        android:icon="@drawable/yourtrip_menu"
+        android:title="Chuyến đi"/>
+    <item android:id="@+id/menu_account"
+        android:icon="@drawable/menu_account"
+        android:title="Tài khoản"/>
+</menu>
