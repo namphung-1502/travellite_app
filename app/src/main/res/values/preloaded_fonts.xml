@@ -4,6 +4,7 @@
         <item>@font/amaranth_bold</item>
         <item>@font/amaranth_bold_italic</item>
         <item>@font/contrail_one</item>
+        <item>@font/noto_sans_bold</item>
         <item>@font/playfair_display_black_italic</item>
     </array>
 </resources>
