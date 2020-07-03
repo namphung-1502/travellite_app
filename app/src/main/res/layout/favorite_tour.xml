@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:id="@+id/layout_logined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rcv_tour_favorite"/>
+    <TextView
+        android:layout_below="@+id/rcv_tour_favorite"
+        android:id="@+id/txt_nolove"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/amaranth_italic"
+        android:text="Bạn chưa thích chuyến du lịch nào"
+        android:textSize="18dp" />
+    <TextView
+        android:id="@+id/txt_top10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_nolove"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="Top 10 chuyến du lịch được yêu thích nhất"
+        android:textColor="#000"
+        android:textSize="18dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="10dp"
+        android:id="@+id/rcv_topfavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txt_top10"/>
+</RelativeLayout>
+<RelativeLayout
+    android:id="@+id/layout_nologined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_marginTop="15dp"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/gif_backgroudnologin"
+        />
+    <TextView
+        android:id="@+id/txt_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gif"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/amaranth_italic"
+        android:gravity="center"
+        android:text="Bạn phải đăng nhập để xem các tour yêu thích"
+        android:textSize="17dp">
+    </TextView>
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txt_note"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:text="Đăng nhập ngay"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:background="@drawable/button_login_favorite"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
+</LinearLayout>

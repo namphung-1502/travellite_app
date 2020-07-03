@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".booking_hotel">
+    <androidx.appcompat.widget.Toolbar
+        android:background="#fff"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đặt phòng"
+            android:textSize="27dp"
+            android:textColor="#000"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:gravity="center"/>
+    </androidx.appcompat.widget.Toolbar>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_name_customer"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:drawableStart="@drawable/account"
+                android:drawablePadding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên đầy đủ"
+                android:inputType="text"
+                android:drawableLeft="@drawable/ic_pool_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_phone_customer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:drawableStart="@drawable/phone_24"
+                android:drawablePadding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại"
+                android:inputType="text"
+                android:drawableLeft="@drawable/ic_pool_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:drawableLeft="@drawable/flag"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quốc tịch: "/>
+        <Spinner
+            android:padding="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:id="@+id/spn_nationality"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_card"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:drawableStart="@drawable/credit_card"
+                android:drawablePadding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=" Số CMND/Master/Visa"
+                android:inputType="text"
+                android:drawableLeft="@drawable/credit_card" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:drawableStart="@drawable/date_icon_24"
+                android:drawablePadding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ngày đến"
+                android:inputType="date"
+                android:drawableLeft="@drawable/ic_pool_black_24dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số lượng phòng"
+            android:textSize="18dp"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/count_people_24"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_descre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="-"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/txt_count_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/btn_incre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="+"
+                android:textSize="18dp"/>
+        </LinearLayout>
+        <TextView
+            android:textColor="#ff0000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_error"
+            android:text="Số phòng phải lớn hơn 0 "/>
+        <Button
+            android:id="@+id/btn_send_infor"
+            android:layout_marginTop="20dp"
+            android:textSize="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gửi thông tin"
+            android:textColor="#fff"
+            android:background="#007fff"/>
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

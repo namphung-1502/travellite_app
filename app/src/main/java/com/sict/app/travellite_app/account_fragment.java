@@ -1,5 +1,7 @@
 package com.sict.app.travellite_app;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sict.app.travellite_app.model.AccessToken;
+import com.sict.app.travellite_app.model.TokenManager;
+import com.sict.app.travellite_app.model.user;
+import com.sict.app.travellite_app.rest_api.client;
+import com.sict.app.travellite_app.rest_api.restapi;
+
+import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -15,6 +32,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class account_fragment extends Fragment {
+    private client client;
+    private restapi restapi;
+    private TextView txt_login, txt_logout,txt_profile;
+    private TokenManager tokenManager;
+    private AccessToken a = new AccessToken();
+    private user u;
+    private TableRow tbr_login, tbr_logout;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,7 +82,76 @@ public class account_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_fragment, container, false);
+       client = new client();
+       restapi = client.getClient().create(restapi.class);
+       View view = inflater.inflate(R.layout.fragment_account_fragment, container, false);
+       tbr_login = (TableRow)view.findViewById(R.id.tbrow_login);
+       tbr_logout = (TableRow)view.findViewById(R.id.tbr_logout);
+       txt_login = (TextView)view.findViewById(R.id.txt_login);
+       txt_logout = (TextView)view.findViewById(R.id.txt_logout);
+       txt_profile = (TextView)view.findViewById(R.id.txt_profile);
+       tokenManager = TokenManager.getInstance(getContext().getSharedPreferences("pref",getContext().MODE_PRIVATE));
+       txt_logout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+             tokenManager.removeToken();
+             Intent i = new Intent(getContext(),login.class);
+             startActivity(i);
+           }
+       });
+       txt_login.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent i = new Intent(getContext(), login.class);
+               startActivity(i);
+           }
+       });
+        txt_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tokenManager.getToken().getToken() !=null){
+                    Intent i = new Intent(getContext(),information_account.class);
+                    i.putExtra("id", u.getId());
+                    i.putExtra("name",u.getName());
+                    i.putExtra("address",u.getAddress());
+                    i.putExtra("email",u.getEmail());
+                    i.putExtra("phone",u.getPhone());
+                    i.putExtra("token",tokenManager.getToken().getToken());
+                    startActivity(i);
+                }
+
+            }
+        });
+        return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        if(tokenManager.getToken().getToken() !=null){
+            tbr_login.setVisibility(View.GONE);
+            tbr_logout.setVisibility(View.VISIBLE);
+            Call<user> calluser = restapi.calluser("Bearer "+tokenManager.getToken().getToken());
+            calluser.enqueue(new Callback<com.sict.app.travellite_app.model.user>() {
+                @Override
+                public void onResponse(Call<com.sict.app.travellite_app.model.user> call, Response<com.sict.app.travellite_app.model.user> response) {
+                    u = response.body();
+                }
+
+                @Override
+                public void onFailure(Call<com.sict.app.travellite_app.model.user> call, Throwable t) {
+
+                }
+            });
+        }else{
+            tbr_login.setVisibility(View.VISIBLE);
+            tbr_logout.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

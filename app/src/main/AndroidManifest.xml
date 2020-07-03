@@ -10,10 +10,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".confirm_booking_hotel"></activity>
+        <activity android:name=".booking_hotel" />
+        <activity android:name=".detail_hotel" />
+        <activity android:name=".changepassword" />
+        <activity android:name=".information_account" />
+        <activity android:name=".detail_tour" />
         <activity android:name=".splash_screen" />
         <activity android:name=".register" />
         <activity android:name=".login" />

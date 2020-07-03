@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".information_account">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+      <TextView
+          android:textSize="23dp"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:textColor="#000"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Hồ sơ cá nhân"/>
+    </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/alegreya_sans_italic"
+            android:text="Tên đầy đủ"
+            android:textColor="#4c4c4c"
+            android:textSize="20dp" />
+    <EditText
+        android:layout_marginTop="5dp"
+        android:textColor="#333"
+        android:id="@+id/edt_name"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phung Van Nam"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/alegreya_sans_italic"
+            android:text="Email"
+            android:textColor="#4c4c4c"
+            android:textSize="20dp" />
+    <EditText
+        android:layout_marginTop="5dp"
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="namphung1502@gmail.com"
+        android:layout_marginLeft="10dp"
+        android:textColor="#333"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/alegreya_sans_italic"
+            android:text="Số điện thoại"
+            android:textColor="#4c4c4c"
+            android:textSize="20dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="#333"
+        android:layout_marginTop="5dp"
+        android:text="0338253456"
+        android:id="@+id/edt_phone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/alegreya_sans_italic"
+            android:text="Địa chỉ"
+            android:textColor="#4c4c4c"
+            android:textSize="20dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="#333"
+        android:text="Đức Cơ, Gia Lai"
+        android:id="@+id/edt_address"/>
+
+       <RelativeLayout
+           android:layout_marginTop="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/title_pass"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="5dp"
+               android:fontFamily="@font/alegreya_sans_italic"
+               android:text="Token"
+               android:textColor="#4c4c4c"
+               android:textSize="20dp" />
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="300dp"
+               android:layout_height="wrap_content"
+               app:passwordToggleEnabled="true"
+               android:id="@+id/tip"
+               android:layout_below="@+id/title_pass">
+               <EditText
+                   android:inputType="textPassword"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="5dp"
+                   android:textColor="#333"
+                   android:text="1234"
+                   android:clickable="false"
+                   android:focusable="false"
+                   android:focusableInTouchMode="false"
+                   android:cursorVisible="false"
+                   android:editable="false"
+                   android:id="@+id/edt_pass"/>
+           </com.google.android.material.textfield.TextInputLayout>
+          <Button
+              android:id="@+id/btn_changepass"
+              android:text="Đổi mật khẩu"
+              android:textAllCaps="false"
+              android:drawablePadding="-3dp"
+              android:background="@android:color/transparent"
+              android:layout_marginLeft="3dp"
+              android:layout_marginTop="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/title_pass"
+              android:layout_toRightOf="@+id/tip"/>
+       </RelativeLayout>
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lưu"
+            android:padding="5dp"
+            android:textColor="#fff"
+            android:background="@drawable/button_save"
+            android:textSize="19dp"
+            android:id="@+id/btn_save"/>
+        <Button
+            android:id="@+id/btn_exit"
+            android:textColor="#fff"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_exit"
+            android:padding="5dp"
+            android:textSize="19dp"
+            android:layout_toRightOf="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thoát"/>
+    </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

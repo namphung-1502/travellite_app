@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/alegreya_sans_italic</item>
+        <item>@font/alegreya_sc_italic</item>
         <item>@font/amaranth_bold</item>
         <item>@font/amaranth_bold_italic</item>
+        <item>@font/amaranth_italic</item>
         <item>@font/contrail_one</item>
         <item>@font/noto_sans_bold</item>
         <item>@font/playfair_display_black_italic</item>

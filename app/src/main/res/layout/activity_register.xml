@@ -18,7 +18,7 @@
          android:textColor="#fff"
          android:textSize="30dp"
          android:gravity="center"
-         android:layout_marginTop="60dp"
+         android:layout_marginTop="30dp"
          android:textStyle="bold"/>
      <EditText
          android:id="@+id/edt_name"
@@ -28,12 +28,30 @@
          android:layout_marginTop="30dp"
          android:background="@android:color/transparent"
          android:drawablePadding="12dp"
-         android:inputType="textEmailAddress"
          android:padding="8dp"
          android:hint="Full name"
          android:textColor="#ffffff"
          android:textColorHint="#ffffff"
          android:drawableLeft="@drawable/acount_white" />
+     <View
+         android:layout_width="320dp"
+         android:layout_height="1dp"
+         android:layout_gravity="center"
+         android:background="#ffffff" />
+     <EditText
+         android:id="@+id/edt_email"
+         android:layout_gravity="center"
+         android:layout_width="320dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="30dp"
+         android:background="@android:color/transparent"
+         android:drawablePadding="12dp"
+         android:inputType="textEmailAddress"
+         android:padding="8dp"
+         android:hint="Email"
+         android:textColor="#ffffff"
+         android:textColorHint="#ffffff"
+         android:drawableLeft="@drawable/email_white" />
      <View
          android:layout_width="320dp"
          android:layout_height="1dp"
@@ -47,7 +65,6 @@
          android:layout_marginTop="30dp"
          android:background="@android:color/transparent"
          android:drawablePadding="12dp"
-         android:inputType="textEmailAddress"
          android:padding="8dp"
          android:hint="Phone number"
          android:textColor="#ffffff"
@@ -66,7 +83,6 @@
          android:layout_marginTop="30dp"
          android:background="@android:color/transparent"
          android:drawablePadding="12dp"
-         android:inputType="textEmailAddress"
          android:padding="8dp"
          android:hint="Address"
          android:textColor="#ffffff"
@@ -85,7 +101,7 @@
          android:layout_marginTop="30dp"
          android:background="@android:color/transparent"
          android:drawablePadding="12dp"
-         android:inputType="textEmailAddress"
+         android:inputType="textPassword"
          android:padding="8dp"
          android:hint="Password"
          android:textColor="#ffffff"
@@ -104,7 +120,7 @@
          android:layout_marginTop="30dp"
          android:background="@android:color/transparent"
          android:drawablePadding="12dp"
-         android:inputType="textEmailAddress"
+         android:inputType="textPassword"
          android:padding="8dp"
          android:hint="Retype-password"
          android:textColor="#ffffff"
@@ -115,6 +131,22 @@
          android:layout_height="1dp"
          android:layout_gravity="center"
          android:background="#ffffff" />
+     <TextView
+         android:id="@+id/txt_null"
+         android:layout_marginLeft="50dp"
+         android:layout_marginTop="10dp"
+         android:textColor="#ff0000"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Vui lòng điền đầy đủ các trường !!!"/>
+     <TextView
+         android:id="@+id/txt_fail_retype"
+         android:layout_marginLeft="50dp"
+         android:layout_marginTop="10dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textColor="#ff0000"
+         android:text="Nhập lại mật khẩu không đúng"/>
      <Button
          android:id="@+id/btn_register"
          android:layout_width="320dp"

@@ -1,5 +1,9 @@
 package com.sict.app.travellite_app;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,17 +19,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.sict.app.travellite_app.adapter.guidebook_adapter_hoz;
 import com.sict.app.travellite_app.adapter.hotel_hoz_adapter;
+import com.sict.app.travellite_app.adapter.sales_adapter;
 import com.sict.app.travellite_app.adapter.slide_adapter;
 import com.sict.app.travellite_app.adapter.viewpager_adapter;
+import com.sict.app.travellite_app.model.TokenManager;
 import com.sict.app.travellite_app.model.bookguide;
+import com.sict.app.travellite_app.model.favorite_hotel;
 import com.sict.app.travellite_app.model.hotel;
 import com.sict.app.travellite_app.model.place;
+import com.sict.app.travellite_app.model.tour_sale;
+import com.sict.app.travellite_app.model.user;
 import com.sict.app.travellite_app.rest_api.client;
 import com.sict.app.travellite_app.rest_api.restapi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -41,7 +53,7 @@ import retrofit2.Response;
  * Use the {@link home_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class home_fragment extends Fragment {
+public class home_fragment extends Fragment implements Serializable{
     private ViewPager tabview;
     private TabLayout tabLayout;
     private client client;
@@ -56,7 +68,13 @@ public class home_fragment extends Fragment {
     private restapi restapi;
     private RecyclerView rcv_bookguide;
     private List<bookguide> bookguideList = new ArrayList<>();
-    // TODO: Rename parameter arguments, choose names that match
+    private guidebook_adapter_hoz guidebook_adapter_hoz;
+    private RecyclerView rcv_sale_tour;
+    private sales_adapter saleadapter;
+    private List<tour_sale> list_toursale = new ArrayList<>();
+    private TokenManager tokenManager;
+    private user u;
+     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -102,6 +120,9 @@ public class home_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_fragment, container, false);
         rcv_hotel = (RecyclerView)view.findViewById(R.id.rcv_hotel);
         rcv_bookguide = (RecyclerView)view.findViewById(R.id.rcv_bookguide);
+        rcv_sale_tour = (RecyclerView)view.findViewById(R.id.rcv_hoz);
+        tokenManager = TokenManager.getInstance(getContext().getSharedPreferences("pref",getContext().MODE_PRIVATE));
+        u = new user();
         initdata();
         return view;
     }
@@ -117,7 +138,23 @@ public class home_fragment extends Fragment {
         tabLayout.setupWithViewPager(tabview);
         slide();
     }
+    public void addfavoritehotel(int id_user, int id_hotel, final String name_hotel){
+        Call<favorite_hotel> addfavoritehotel = restapi.addfavoritehotel(id_user, id_hotel);
+        addfavoritehotel.enqueue(new Callback<favorite_hotel>() {
+            @Override
+            public void onResponse(Call<favorite_hotel> call, Response<favorite_hotel> response) {
+                if(!response.isSuccessful()){
+                }else {
+                    Toast.makeText(getContext(), "Bạn vừa thích "+name_hotel, Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<favorite_hotel> call, Throwable t) {
+                Toast.makeText(getContext(), "Bạn đã thích khách sạn này rồi !!! ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void initdata() {
         client = new client();
@@ -133,6 +170,46 @@ public class home_fragment extends Fragment {
                 }
             list_hotel.addAll(response.body());
             hotel_hoz_adapter = new hotel_hoz_adapter(getContext(),list_hotel);
+            hotel_hoz_adapter.setListener(new hotel_hoz_adapter.OnCallBack() {
+                @Override
+                public void OnItemClick(final int i) {
+                   if (tokenManager.getToken().getToken() != null){
+                       Call<user> calluser = restapi.calluser("Bearer "+tokenManager.getToken().getToken());
+                       calluser.enqueue(new Callback<user>() {
+                           @Override
+                           public void onResponse(Call<user> call, Response<user> response) {
+                               u = response.body();
+                               addfavoritehotel(u.getId(), list_hotel.get(i).getId(), list_hotel.get(i).getName());
+                           }
+
+                           @Override
+                           public void onFailure(Call<user> call, Throwable t) {
+
+                           }
+                       });
+                   }else{
+                       AlertDialog.Builder login = new AlertDialog.Builder(getContext());
+                       login.setTitle("Xác nhận");
+                       login.setMessage("Bạn phải đăng nhập để thực hiện chức năng yêu thích !!!");
+                       login.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialog, int which) {
+                               dialog.cancel();
+                           }
+                       });
+                       AlertDialog a = login.create();
+                       a.show();
+                   }
+                }
+            });
+            hotel_hoz_adapter.setDetailClick(new hotel_hoz_adapter.OnDetailClick() {
+                @Override
+                public void DetailClick(int i) {
+                    Intent intent = new Intent(getContext(), detail_hotel.class);
+                    intent.putExtra("hotel", (Serializable) list_hotel.get(i));
+                    startActivity(intent);
+                }
+            });
             LinearLayoutManager hor =new LinearLayoutManager(getActivity(),
                         LinearLayoutManager.HORIZONTAL,false);
             rcv_hotel.setLayoutManager(hor);
@@ -147,7 +224,7 @@ public class home_fragment extends Fragment {
         });
 
         //set data for bookguide recyclerview
-        Call<List<bookguide>> getbookguide = restapi.getbookguide();
+        final Call<List<bookguide>> getbookguide = restapi.getbookguide();
         getbookguide.enqueue(new Callback<List<bookguide>>() {
             @Override
             public void onResponse(Call<List<bookguide>> call, Response<List<bookguide>> response) {
@@ -156,12 +233,48 @@ public class home_fragment extends Fragment {
                     Log.e("Loi nay :", response.message());
                 }
                 bookguideList.addAll(response.body());
-
+                guidebook_adapter_hoz = new guidebook_adapter_hoz(getContext(),bookguideList);
+                LinearLayoutManager hor =new LinearLayoutManager(getActivity(),
+                        LinearLayoutManager.HORIZONTAL,false);
+                rcv_bookguide.setLayoutManager(hor);
+                rcv_bookguide.setAdapter(guidebook_adapter_hoz);
+                rcv_bookguide.setHasFixedSize(true);
             }
 
             @Override
             public void onFailure(Call<List<bookguide>> call, Throwable t) {
+                Toast.makeText(getActivity(), "loi la :"+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        Call<List<tour_sale>> gettour_sale = restapi.gettoursale();
+        gettour_sale.enqueue(new Callback<List<tour_sale>>() {
+            @Override
+            public void onResponse(Call<List<tour_sale>> call, Response<List<tour_sale>> response) {
+                if(!response.isSuccessful())
+                {
+                    Log.e("Loi nay :", response.message());
+                }
+                list_toursale.addAll(response.body());
+                saleadapter = new sales_adapter(getContext(),list_toursale);
+                LinearLayoutManager hor =new LinearLayoutManager(getActivity(),
+                        LinearLayoutManager.HORIZONTAL,false);
+                saleadapter.setOnCallBack(new sales_adapter.OnCallBack() {
+                    @Override
+                    public void OnItemClick(int i) {
+                       Intent intent = new Intent(getContext(),detail_tour.class);
+                       intent.putExtra("tour", (Serializable) list_toursale.get(i));
+                       startActivity(intent);
+                    }
+                });
+                rcv_sale_tour.setLayoutManager(hor);
+                rcv_sale_tour.setAdapter(saleadapter);
+                rcv_sale_tour.setHasFixedSize(true);
+            }
 
+            @Override
+            public void onFailure(Call<List<tour_sale>> call, Throwable t) {
+                Toast.makeText(getContext(), "this is"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("loi nay",t.getMessage());
             }
         });
 

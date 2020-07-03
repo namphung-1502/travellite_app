@@ -3,7 +3,9 @@ package com.sict.app.travellite_app.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class hotel {
+import java.io.Serializable;
+
+public class hotel implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
@@ -35,7 +37,11 @@ public class hotel {
     @Expose
     private String description;
 
-    public hotel(String name, String place, int cost, String image, int empty, String phonenumber, String description) {
+    @SerializedName("favorite")
+    @Expose
+    private int favorite;
+
+    public hotel(String name, String place, int cost, String image, int empty, String phonenumber, String description, int favorite) {
         this.name = name;
         this.place = place;
         this.cost = cost;
@@ -43,6 +49,7 @@ public class hotel {
         this.empty = empty;
         this.phonenumber = phonenumber;
         this.description = description;
+        this.favorite = favorite;
     }
     public hotel(){}
 
@@ -100,5 +107,21 @@ public class hotel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
     }
 }

@@ -1,4 +1,4 @@
-package com.sict.app.travellite_app;
+package com.sict.app.travellite_app.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sict.app.travellite_app.R;
 import com.sict.app.travellite_app.adapter.area_adapter;
 import com.sict.app.travellite_app.model.area;
 

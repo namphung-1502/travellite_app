@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.sict.app.travellite_app.domestic_fragment;
-import com.sict.app.travellite_app.foreign_fragment;
+import com.sict.app.travellite_app.fragment.domestic_fragment;
+import com.sict.app.travellite_app.fragment.foreign_fragment;
 
 public class viewpager_adapter extends FragmentStatePagerAdapter {
     private String nametab[] = {"Trong nước", "Nước ngoài"};
