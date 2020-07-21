@@ -3,7 +3,9 @@ package com.sict.app.travellite_app.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class money {
+import java.io.Serializable;
+
+public class money implements Serializable {
     @SerializedName("adult")
     @Expose
     private int adult;

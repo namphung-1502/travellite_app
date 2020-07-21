@@ -14,9 +14,10 @@ import com.bumptech.glide.Glide;
 import com.sict.app.travellite_app.R;
 import com.sict.app.travellite_app.model.tour_sale;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class sales_adapter extends RecyclerView.Adapter<sales_adapter.ViewHolder> {
+public class sales_adapter extends RecyclerView.Adapter<sales_adapter.ViewHolder> implements Serializable {
     private Context context;
     private List<tour_sale> list;
     OnCallBack onCallBack;
@@ -43,7 +44,7 @@ public class sales_adapter extends RecyclerView.Adapter<sales_adapter.ViewHolder
 
         holder.txt_name.setText(list.get(position).getName());
         holder.txt_sale.setText(String.valueOf("Khuyến mãi -"+list.get(position).getSale()+"%"));
-        int rest = (list.get(position).getMoney().getAdult()*list.get(position).getSale())/100;
+        int rest = list.get(position).getMoney().getAdult()-(list.get(position).getMoney().getAdult()*list.get(position).getSale())/100;
         holder.txt_rest.setText(String.valueOf("$"+rest));
         holder.txt_name.setOnClickListener(new View.OnClickListener() {
             @Override

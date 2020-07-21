@@ -14,12 +14,14 @@ import com.bumptech.glide.Glide;
 import com.sict.app.travellite_app.R;
 import com.sict.app.travellite_app.model.detail_image;
 
+import java.util.List;
+
 public class slide_detail_tour_adapter extends PagerAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private String[] image;
+    private List image;
 
-    public slide_detail_tour_adapter(Context context, String[] image) {
+    public slide_detail_tour_adapter(Context context, List image) {
         this.context = context;
         this.image = image;
     }
@@ -30,14 +32,14 @@ public class slide_detail_tour_adapter extends PagerAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.slide_detail_tour, container,false);
         ImageView img = (ImageView)view.findViewById(R.id.img);
-        Glide.with(context).load("http://10.0.2.2:8000/image/"+image[position]).into(img);
+        Glide.with(context).load("http://10.0.2.2:8000/image/"+image.get(position)).into(img);
         container.addView(view);
         return view;
     }
 
     @Override
     public int getCount() {
-        return image.length;
+        return image.size();
     }
 
     @Override

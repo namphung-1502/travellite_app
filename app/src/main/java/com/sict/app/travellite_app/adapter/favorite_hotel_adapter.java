@@ -22,6 +22,12 @@ public class favorite_hotel_adapter extends RecyclerView.Adapter<favorite_hotel_
     private List<hotel> list;
     private Context context;
     OnCallBack onCallBack;
+    OnDetailHotel detailHotel;
+
+    public void setDetailHotel(OnDetailHotel detailHotel) {
+        this.detailHotel = detailHotel;
+    }
+
     public void setListener(OnCallBack listener) {
         this.onCallBack = listener;
     }
@@ -42,7 +48,7 @@ public class favorite_hotel_adapter extends RecyclerView.Adapter<favorite_hotel_
          holder.txt_name.setText(list.get(position).getName());
          holder.txt_place.setText(list.get(position).getPlace());
          holder.txt_cost.setText(String.valueOf("$"+list.get(position).getCost()));
-         Glide.with(context).load(list.get(position).getImage()).into(holder.img);
+         Glide.with(context).load("http://10.0.2.2:8000/image/"+list.get(position).getImage()).into(holder.img);
     }
 
     @Override
@@ -68,9 +74,18 @@ public class favorite_hotel_adapter extends RecyclerView.Adapter<favorite_hotel_
                 }
             });
             btn_detail = (Button)itemView.findViewById(R.id.btn_detail);
+            btn_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   detailHotel.DetailHotel(getPosition());
+                }
+            });
         }
     }
     public interface OnCallBack {
         void OnItemClick(int i);
+    }
+    public interface OnDetailHotel{
+        void DetailHotel(int i);
     }
 }

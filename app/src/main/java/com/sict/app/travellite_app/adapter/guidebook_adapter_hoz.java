@@ -36,7 +36,7 @@ public class guidebook_adapter_hoz extends RecyclerView.Adapter<guidebook_adapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txt_name.setText(list.get(position).getName());
-        Glide.with(context).load(list.get(position).getImage()).into(holder.img);
+        Glide.with(context).load("http://10.0.2.2:8000/image/"+list.get(position).getImage()).into(holder.img);
     }
 
     @Override

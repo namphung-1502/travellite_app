@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".confirm_booking_hotel"></activity>
+        <activity android:name=".detail_guide"></activity>
+        <activity android:name=".confirm_bookingtour" />
+        <activity android:name=".booking_tour" />
+        <activity android:name=".confirm_booking_hotel" />
         <activity android:name=".booking_hotel" />
         <activity android:name=".detail_hotel" />
         <activity android:name=".changepassword" />

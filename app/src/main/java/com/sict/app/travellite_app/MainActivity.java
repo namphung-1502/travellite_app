@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction4.replace(R.id.fram, f4);
                     fragmentTransaction4.commit();
                     return true;
+                case R.id.menu_yourhotel:
+                    hotel_fragment f5 = new hotel_fragment();
+                    FragmentTransaction fragmentTransaction5 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction5.replace(R.id.fram, f5);
+                    fragmentTransaction5.commit();
+                    return true;
             }
             return false;
         }

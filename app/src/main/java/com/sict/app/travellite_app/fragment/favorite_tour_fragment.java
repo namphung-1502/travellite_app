@@ -98,8 +98,7 @@ public class favorite_tour_fragment extends Fragment {
         deletefavoritetour.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful())
-                    Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                if(response.isSuccessful()){}
                 else
                     Toast.makeText(getContext(), "Do not delete", Toast.LENGTH_SHORT).show();
             }
@@ -135,12 +134,25 @@ public class favorite_tour_fragment extends Fragment {
                                }else{
                                     txt_nolove.setVisibility(View.GONE);
                                     favorite_adapter = new favorite_tour_adaper(list_tour_favorite,getContext());
+                                    favorite_adapter.setDetailTour(new favorite_tour_adaper.OnDetailTour() {
+                                        @Override
+                                        public void detailTour(int i) {
+
+                                        }
+                                    });
                                     favorite_adapter.setListener(new favorite_tour_adaper.OnCallBack() {
                                         @Override
                                         public void OnItemClick(int i) {
-                                           list_tour_favorite.remove(i);
-                                           favorite_adapter.notifyDataSetChanged();
                                            deletetour(list_tour_favorite.get(i).getId(), u.getId());
+                                           if(list_tour_favorite.size()>1){
+                                               list_tour_favorite.remove(i);
+                                               favorite_adapter.notifyDataSetChanged();
+                                           }else{
+                                              list_tour_favorite.clear();
+                                               favorite_adapter.notifyDataSetChanged();
+                                               rcv_tour_favorite.setVisibility(View.GONE);
+                                               txt_nolove.setVisibility(View.VISIBLE);
+                                           }
                                         }
                                     });
                                     rcv_tour_favorite.setAdapter(favorite_adapter);

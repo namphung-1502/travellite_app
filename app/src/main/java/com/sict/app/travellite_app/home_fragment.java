@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -256,16 +257,16 @@ public class home_fragment extends Fragment implements Serializable{
                 }
                 list_toursale.addAll(response.body());
                 saleadapter = new sales_adapter(getContext(),list_toursale);
-                LinearLayoutManager hor =new LinearLayoutManager(getActivity(),
-                        LinearLayoutManager.HORIZONTAL,false);
                 saleadapter.setOnCallBack(new sales_adapter.OnCallBack() {
                     @Override
                     public void OnItemClick(int i) {
-                       Intent intent = new Intent(getContext(),detail_tour.class);
-                       intent.putExtra("tour", (Serializable) list_toursale.get(i));
-                       startActivity(intent);
+                            Intent it = new Intent(getContext(),detail_tour.class);
+                            it.putExtra("idtour",list_toursale.get(i).getId());
+                            startActivity(it);
                     }
                 });
+                LinearLayoutManager hor =new LinearLayoutManager(getActivity(),
+                        LinearLayoutManager.HORIZONTAL,false);
                 rcv_sale_tour.setLayoutManager(hor);
                 rcv_sale_tour.setAdapter(saleadapter);
                 rcv_sale_tour.setHasFixedSize(true);

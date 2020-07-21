@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Yêu thích"
-                android:textSize="27dp"
-                android:textColor="#000"
+                android:textSize="23dp"
+                android:textColor="#007fff"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:gravity="center"/>
         </androidx.appcompat.widget.Toolbar>
@@ -32,13 +32,16 @@
             android:id="@+id/tablayout"
             app:tabIndicatorColor="#007fff"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#000"
+            android:background="#fff"
+            app:tabSelectedTextColor="#005fbf"
             app:tabTextColor="#000"
+            app:tabRippleColor="#fff"
             app:tabTextAppearance="@style/tabLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager2"
+            android:background="#fff"
             android:layout_below="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="650dp"/>

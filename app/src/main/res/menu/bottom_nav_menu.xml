@@ -6,6 +6,10 @@
     <item android:id="@+id/menu_favorite"
         android:icon="@drawable/favorite_menu"
         android:title="Yêu thích"/>
+    <item
+        android:id="@+id/menu_yourhotel"
+        android:title="Khách sạn"
+        android:icon="@drawable/hotel_menu"/>
     <item android:id="@+id/menu_yourtrip"
         android:icon="@drawable/yourtrip_menu"
         android:title="Chuyến đi"/>

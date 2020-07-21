@@ -70,15 +70,17 @@ public class confirm_booking_hotel extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<booking_hotel> call, Response<booking_hotel> response) {
                             if (response.isSuccessful()){
-                                Toast.makeText(confirm_booking_hotel.this, "Bạn đã đặt tour thành công !!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(confirm_booking_hotel.this, "Bạn đã đặt khách sạn thành công !!!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(confirm_booking_hotel.this, MainActivity.class);
                                 startActivity(intent);
-                            }
+                            }else
+                                Toast.makeText(confirm_booking_hotel.this, "Can not booking hotel: "+response.code(), Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override
                         public void onFailure(Call<booking_hotel> call, Throwable t) {
-
+                            Toast.makeText(confirm_booking_hotel.this, "Error:"+t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

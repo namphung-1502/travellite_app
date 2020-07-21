@@ -29,7 +29,7 @@ public class hotel implements Serializable {
     @Expose
     private int empty;
 
-    @SerializedName("phone number")
+    @SerializedName("phone")
     @Expose
     private String phonenumber;
 

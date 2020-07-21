@@ -73,7 +73,6 @@ public class register extends AppCompatActivity {
                 register.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Toast.makeText(register.this, "Đăng kí thành công "+response.body(), Toast.LENGTH_SHORT).show();
                         edt_name.setText(null);
                         edt_address.setText(null);
                         edt_password.setText(null);

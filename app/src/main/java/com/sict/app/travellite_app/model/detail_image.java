@@ -3,7 +3,9 @@ package com.sict.app.travellite_app.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class detail_image {
+import java.io.Serializable;
+
+public class detail_image implements Serializable {
     @SerializedName("image1")
     @Expose
     private String image1;

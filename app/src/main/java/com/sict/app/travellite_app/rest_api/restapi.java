@@ -2,8 +2,10 @@ package com.sict.app.travellite_app.rest_api;
 
 import com.sict.app.travellite_app.booking_hotel;
 import com.sict.app.travellite_app.model.AccessToken;
+import com.sict.app.travellite_app.model.bill;
 import com.sict.app.travellite_app.model.bookguide;
 import com.sict.app.travellite_app.model.favorite_hotel;
+import com.sict.app.travellite_app.model.favorite_tour;
 import com.sict.app.travellite_app.model.hotel;
 import com.sict.app.travellite_app.model.tour;
 import com.sict.app.travellite_app.model.tour_sale;
@@ -56,6 +58,25 @@ public interface restapi {
 
    @DELETE("favoritetour")
    Call<String> deletefavoritetour(@Query("iduser") int iduser, @Query("idtour") int idtour);
+
+   @POST("addtourfavorite")
+   Call<favorite_tour> addtourfavorite(@Query("iduser") int iduser, @Query("idtour") int idtour);
+
+   @GET("tourbyid/{id}")
+   Call<tour> tourbyid(@Path("id") int id);
+
+   @GET("getsaletour/{id}")
+   Call<Integer> getsaletour(@Path("id") int id);
+
+   @POST("bookingtour")
+   Call<String> bookingtour(@Query("idtour") int idtour, @Query("iduser") int iduser, @Query("nametour") String nametour, @Query("departureDay") String departureDay,
+                            @Query("namecustomer") String namecustomer, @Query("phone") String phone, @Query("address") String address,
+                            @Query("adult") int adult, @Query("young") int young, @Query("baby") int baby, @Query("total") int total);
+   @GET("billbyuser/{iduser}")
+   Call<List<bill>> billbyuser(@Path("iduser") int iduser);
+
+   @DELETE("deletebill/{id}")
+   Call<String> deletebill(@Path("id") int id);
 
    @GET("bookguide")
    Call<List<bookguide>> getbookguide();

@@ -21,6 +21,12 @@ public class favorite_tour_adaper extends RecyclerView.Adapter<favorite_tour_ada
     List<tour> list;
     Context context;
     OnCallBack onCallBack;
+    OnDetailTour detailTour;
+
+    public void setDetailTour(OnDetailTour detailTour) {
+        this.detailTour = detailTour;
+    }
+
     public void setListener(OnCallBack listener) {
         this.onCallBack = listener;
     }
@@ -51,7 +57,7 @@ public class favorite_tour_adaper extends RecyclerView.Adapter<favorite_tour_ada
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txt_name, txt_cost;
+        TextView txt_name, txt_cost, txt_detail;
         Button btn_quite_favorite;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,9 +71,19 @@ public class favorite_tour_adaper extends RecyclerView.Adapter<favorite_tour_ada
                    onCallBack.OnItemClick(getPosition());
                 }
             });
+            txt_detail = (TextView) itemView.findViewById(R.id.btn_detail);
+            txt_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    detailTour.detailTour(getPosition());
+                }
+            });
         }
     }
     public interface OnCallBack {
         void OnItemClick(int i);
+    }
+    public interface OnDetailTour{
+        void detailTour(int i);
     }
 }

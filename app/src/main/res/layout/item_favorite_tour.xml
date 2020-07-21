@@ -47,6 +47,7 @@
         android:layout_below="@id/txt_name"
         android:text="Bỏ yêu thích"/>
     <TextView
+        android:id="@+id/btn_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_name"

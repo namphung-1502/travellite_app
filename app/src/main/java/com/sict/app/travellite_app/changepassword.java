@@ -31,7 +31,6 @@ public class changepassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
         init();
-        Toast.makeText(this, "id is"+ getIntent().getIntExtra("id",0), Toast.LENGTH_SHORT).show();
     }
 
     private void init() {

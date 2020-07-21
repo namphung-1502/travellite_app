@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sict.app.travellite_app.R;
 import com.sict.app.travellite_app.adapter.favorite_hotel_adapter;
 import com.sict.app.travellite_app.adapter.tophotels_adapter;
+import com.sict.app.travellite_app.detail_hotel;
 import com.sict.app.travellite_app.login;
 import com.sict.app.travellite_app.model.TokenManager;
 import com.sict.app.travellite_app.model.hotel;
@@ -29,6 +30,7 @@ import com.sict.app.travellite_app.model.user;
 import com.sict.app.travellite_app.rest_api.client;
 import com.sict.app.travellite_app.rest_api.restapi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,9 +70,80 @@ public class favorite_hotel_fragment extends Fragment {
                 startActivity(i);
             }
         });
+        startedactiviti();
        return view;
     }
+   private void startedactiviti(){
+       if(tokenManager.getToken().getToken() !=null){
+           layout_logined.setVisibility(View.VISIBLE);
+           layout_nologined.setVisibility(View.GONE);
+           initdata();
+           Call<user> calluser = restapi.calluser("Bearer "+tokenManager.getToken().getToken());
+           calluser.enqueue(new Callback<com.sict.app.travellite_app.model.user>() {
+               @Override
+               public void onResponse(Call<com.sict.app.travellite_app.model.user> call, Response<com.sict.app.travellite_app.model.user> response) {
+                   u = response.body();
+                   Call<List<hotel>> callhotelfavorite = restapi.callfavoritehotel(u.getId());
+                   callhotelfavorite.enqueue(new Callback<List<hotel>>() {
+                       @Override
+                       public void onResponse(Call<List<hotel>> call, Response<List<hotel>> response) {
+                           if (response.isSuccessful()){
+                               list_hotel_favorite.addAll(response.body());
+                               if(list_hotel_favorite.isEmpty()){
+                                   txt_nolove.setVisibility(View.VISIBLE);
+                                   rcv_favorite.setVisibility(View.GONE);
+                               }else{
+                                   txt_nolove.setVisibility(View.GONE);
+                                   rcv_favorite.setVisibility(View.VISIBLE);
+                                   adapter_favorite = new favorite_hotel_adapter(list_hotel_favorite,getContext());
+                                   adapter_favorite.setDetailHotel(new favorite_hotel_adapter.OnDetailHotel() {
+                                       @Override
+                                       public void DetailHotel(int i) {
+                                           Intent it = new Intent(getContext(), detail_hotel.class);
+                                           it.putExtra("hotel", (Serializable) list_hotel_favorite.get(i));
+                                           startActivity(it);
+                                       }
+                                   });
+                                   adapter_favorite.setListener(new favorite_hotel_adapter.OnCallBack() {
+                                       @Override
+                                       public void OnItemClick(int i) {
+                                           deletehotel(u.getId(), list_hotel_favorite.get(i).getId());
+                                           if(list_hotel_favorite.size()>1){
+                                               list_hotel_favorite.remove(i);
+                                               adapter_favorite.notifyDataSetChanged();
+                                           }else{
+                                               list_hotel_favorite.clear();
+                                               adapter_favorite.notifyDataSetChanged();
+                                               rcv_favorite.setVisibility(View.GONE);
+                                               txt_nolove.setVisibility(View.VISIBLE);
+                                           }
+                                       }
+                                   });
+                                   rcv_favorite.setAdapter(adapter_favorite);
+                                   rcv_favorite.setLayoutManager(new LinearLayoutManager(getContext()));
+                               }
+                           }else{
+                               Toast.makeText(getContext(), "Do not load data", Toast.LENGTH_SHORT).show();
+                           }
+                       }
 
+                       @Override
+                       public void onFailure(Call<List<hotel>> call, Throwable t) {
+                           Toast.makeText(getContext(), "Error"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                       }
+                   });
+               }
+
+               @Override
+               public void onFailure(Call<com.sict.app.travellite_app.model.user> call, Throwable t) {
+               }
+           });
+
+       }else{
+           layout_nologined.setVisibility(View.VISIBLE);
+           layout_logined.setVisibility(View.GONE);
+       }
+   }
     private void initdata() {
         u = new user();
         client = new client();
@@ -111,67 +184,7 @@ public class favorite_hotel_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(tokenManager.getToken().getToken() !=null){
-            layout_logined.setVisibility(View.VISIBLE);
-            layout_nologined.setVisibility(View.GONE);
-            initdata();
-            Call<user> calluser = restapi.calluser("Bearer "+tokenManager.getToken().getToken());
-            calluser.enqueue(new Callback<com.sict.app.travellite_app.model.user>() {
-                @Override
-                public void onResponse(Call<com.sict.app.travellite_app.model.user> call, Response<com.sict.app.travellite_app.model.user> response) {
-                           u = response.body();
-                           Call<List<hotel>> callhotelfavorite = restapi.callfavoritehotel(u.getId());
-                           callhotelfavorite.enqueue(new Callback<List<hotel>>() {
-                               @Override
-                               public void onResponse(Call<List<hotel>> call, Response<List<hotel>> response) {
-                                  if (response.isSuccessful()){
-                                      list_hotel_favorite.addAll(response.body());
-                                      if(list_hotel_favorite.isEmpty()){
-                                          txt_nolove.setVisibility(View.VISIBLE);
-                                          rcv_favorite.setVisibility(View.GONE);
-                                      }else{
-                                          txt_nolove.setVisibility(View.GONE);
-                                          rcv_favorite.setVisibility(View.VISIBLE);
-                                          adapter_favorite = new favorite_hotel_adapter(list_hotel_favorite,getContext());
-                                          adapter_favorite.setListener(new favorite_hotel_adapter.OnCallBack() {
-                                              @Override
-                                              public void OnItemClick(int i) {
-                                                  deletehotel(u.getId(), list_hotel_favorite.get(i).getId());
-                                                 if(list_hotel_favorite.size()>1){
-                                                     list_hotel_favorite.remove(i);
-                                                     adapter_favorite.notifyDataSetChanged();
-                                                 }else{
-                                                    list_hotel_favorite.clear();
-                                                    adapter_favorite.notifyDataSetChanged();
-                                                    rcv_favorite.setVisibility(View.GONE);
-                                                    txt_nolove.setVisibility(View.VISIBLE);
-                                                 }
-                                              }
-                                          });
-                                          rcv_favorite.setAdapter(adapter_favorite);
-                                          rcv_favorite.setLayoutManager(new LinearLayoutManager(getContext()));
-                                      }
-                                  }else{
-                                      Toast.makeText(getContext(), "Do not load data", Toast.LENGTH_SHORT).show();
-                                  }
-                               }
 
-                               @Override
-                               public void onFailure(Call<List<hotel>> call, Throwable t) {
-                                   Toast.makeText(getContext(), "Error"+t.getMessage(), Toast.LENGTH_SHORT).show();
-                               }
-                           });
-                       }
-
-                @Override
-                public void onFailure(Call<com.sict.app.travellite_app.model.user> call, Throwable t) {
-                }
-            });
-
-        }else{
-            layout_nologined.setVisibility(View.VISIBLE);
-            layout_logined.setVisibility(View.GONE);
-        }
     }
 }
 
